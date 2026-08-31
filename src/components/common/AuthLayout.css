@@ -1,0 +1,215 @@
+.auth-shell {
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  background: var(--color-bg);
+}
+
+.auth-shell__panel {
+  position: relative;
+  overflow: hidden;
+  width: 42%;
+  min-width: 380px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-12) var(--space-10);
+  background: linear-gradient(155deg, var(--color-ink) 0%, var(--color-primary) 100%);
+  color: var(--color-text-inverse);
+  box-sizing: border-box;
+}
+
+.auth-shell__decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auth-shell__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--color-accent);
+}
+
+.auth-shell__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.auth-shell__ring--outer {
+  width: 520px;
+  height: 520px;
+  right: -200px;
+  bottom: -220px;
+}
+
+.auth-shell__ring--inner {
+  width: 300px;
+  height: 300px;
+  right: -90px;
+  bottom: -110px;
+  border-color: var(--color-accent);
+  opacity: 0.55;
+}
+
+.auth-shell__brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.auth-shell__brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.5px;
+}
+
+.auth-shell__brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-shell__brand-name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+}
+
+.auth-shell__brand-tagline {
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  letter-spacing: 0.4px;
+}
+
+.auth-shell__message {
+  position: relative;
+  z-index: 1;
+  max-width: 380px;
+}
+
+.auth-shell__eyebrow {
+  display: inline-flex;
+  margin-bottom: var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.3px;
+}
+
+.auth-shell__message h2 {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  margin-bottom: var(--space-4);
+}
+
+.auth-shell__message p {
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.auth-shell__content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  box-sizing: border-box;
+}
+
+.auth-shell__account-bar {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-8);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.auth-shell__account-greeting {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.auth-shell__account-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.auth-shell__account-link {
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.auth-shell__account-link:hover {
+  text-decoration: underline;
+}
+
+.auth-shell__account-link--button {
+  color: var(--color-text-secondary);
+}
+
+.auth-shell--no-panel .auth-shell__content {
+  align-items: flex-start;
+  padding-top: var(--space-12);
+}
+
+@media (max-width: 900px) {
+  .auth-shell {
+    flex-direction: column;
+  }
+
+  .auth-shell__panel {
+    width: 100%;
+    min-width: 0;
+    min-height: 200px;
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .auth-shell__message {
+    display: none;
+  }
+
+  .auth-shell__content {
+    padding: var(--space-6);
+  }
+
+  .auth-shell__account-bar {
+    position: static;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+  }
+}
