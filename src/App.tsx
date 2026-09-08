@@ -10,6 +10,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import type { ReactNode } from 'react'
 import { useAuth } from './Funcionalidades/authentication/hooks/useAuthentication'
 import { ROLE_CONTROL_INTERNO, ROLE_TIENDAS } from './models/auth'
+import React from 'react'
 
 // Carga diferida: esta página trae la librería de parseo de Excel (xlsx), que solo
 // necesitan los administradores que suben el archivo, no el resto de usuarios.
@@ -24,6 +25,8 @@ interface ProtectedRouteProps {
 
 function ProtectedRoute({ children, requireRole, blockRole }: ProtectedRouteProps) {
   const { session, loading, hasRole } = useAuth()
+
+  //React.useEffect(() => {console.log(session?.access_token)}, [session, loading, hasRole])
 
   if (loading) return null // o un spinner
 
@@ -50,6 +53,7 @@ function RoleRedirect() {
 }
 
 function App() {
+
   return (
     <BrowserRouter>
       <AuthProvider>

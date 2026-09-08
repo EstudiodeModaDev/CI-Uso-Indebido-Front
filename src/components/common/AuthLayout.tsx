@@ -33,10 +33,10 @@ function AuthLayout({ eyebrow, title, description, children, hideBrandPanel = fa
 
           <div className="auth-shell__brand">
             <span className="auth-shell__brand-mark" aria-hidden="true">
-              UI
+              CD
             </span>
             <div className="auth-shell__brand-text">
-              <p className="auth-shell__brand-name">Uso Indebido</p>
+              <p className="auth-shell__brand-name">Compras y descuentos</p>
               <p className="auth-shell__brand-tagline">Estudio de Moda</p>
             </div>
           </div>
