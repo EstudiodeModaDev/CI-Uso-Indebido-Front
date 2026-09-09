@@ -8,4 +8,5 @@ export interface PersonaExportRow {
   estado_persona: string
   estado_usuario: string
   rol: string
+  empresa_pertenece: string
 }

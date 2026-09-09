@@ -23,6 +23,8 @@ interface UserRow {
   correo?: string;
   telefono?: string;
   estado?: string;
+  tipo_persona?: string;
+  empresa_pertenece?: string;
 }
 
 interface RowResult {
@@ -172,6 +174,7 @@ function normalizeRow(raw: UserRow) {
     correo: raw.correo?.toString().trim().toLowerCase() || "",
     telefono: raw.telefono?.toString().trim() || null,
     estado: raw.estado?.toString().trim().toUpperCase() || DEFAULT_ESTADO,
+    empresa_pertenece: raw.empresa_pertenece?.toString().trim() || null,
   };
 }
 
@@ -234,6 +237,8 @@ async function processRow(
       correo: row.correo,
       telefono: row.telefono,
       estado: row.estado,
+      tipo_persona: "SOCIO COMERCIAL",
+      empresa_pertenece: row.empresa_pertenece,
     };
 
     let usuarioId: number;

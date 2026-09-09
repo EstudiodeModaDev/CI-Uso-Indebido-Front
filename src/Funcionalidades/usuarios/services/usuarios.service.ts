@@ -25,6 +25,9 @@ const COLUMN_ALIASES: Record<string, keyof ExcelUserRow> = {
   tipopersona: 'tipo_persona',
   tipodepersona: 'tipo_persona',
   rol: 'tipo_persona',
+  empresapertenece: 'empresa_pertenece',
+  empresa: 'empresa_pertenece',
+  "empresa pertenece": 'empresa_pertenece',
 }
 
 const EMPTY_ROW: ExcelUserRow = {
@@ -36,6 +39,7 @@ const EMPTY_ROW: ExcelUserRow = {
   telefono: '',
   estado: '',
   tipo_persona: '',
+  empresa_pertenece: '',
 }
 
 // Rango Unicode de diacríticos combinantes (0x0300-0x036f), expresado como códigos
@@ -121,6 +125,7 @@ interface PersonaQueryRow {
   correo: string
   telefono: string | null
   estado: string | null
+  empresa_pertenece: string | null
 }
 
 interface UsuarioQueryRow {
@@ -143,7 +148,7 @@ export async function fetchPersonasByRol(rol: string | null): Promise<PersonaExp
       ROLES!usuarios_roles_id_rol_fkey!inner ( nombre ),
       USUARIOS!inner (
         estado,
-        PERSONAS!usuarios_id_persona_fkey ( tipo_documento, numero_documento, nombres, apellidos, correo, telefono, estado )
+        PERSONAS!usuarios_id_persona_fkey ( tipo_documento, numero_documento, nombres, apellidos, correo, telefono, estado, empresa_pertenece )
       )
     `,
     )
@@ -176,6 +181,7 @@ export async function fetchPersonasByRol(rol: string | null): Promise<PersonaExp
         estado_persona: persona.estado ?? '',
         estado_usuario: usuario.estado ?? '',
         rol: rolNombre,
+        empresa_pertenece: persona.empresa_pertenece ?? '',
       },
     ]
   })
@@ -193,6 +199,7 @@ export function exportPersonasToExcel(rows: PersonaExportRow[], rol: string | nu
       'Estado persona': row.estado_persona,
       'Estado usuario': row.estado_usuario,
       Rol: row.rol,
+      'Empresa a la que pertenece': row.empresa_pertenece,
     })),
   )
 

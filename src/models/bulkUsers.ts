@@ -7,6 +7,7 @@ export interface ExcelUserRow {
   telefono: string
   estado: string
   tipo_persona: string
+  empresa_pertenece: string
 }
 
 export type BulkCreateRowStatus = 'created' | 'updated' | 'error'

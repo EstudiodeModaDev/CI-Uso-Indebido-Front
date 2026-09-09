@@ -114,8 +114,7 @@ function CargaUsuarios() {
                     <th>Apellidos</th>
                     <th>Correo</th>
                     <th>Teléfono</th>
-                    <th>Estado</th>
-                    <th>Tipo persona</th>
+                    <th>Empresa</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -126,8 +125,7 @@ function CargaUsuarios() {
                       <td>{row.apellidos}</td>
                       <td>{row.correo}</td>
                       <td>{row.telefono}</td>
-                      <td>{row.estado}</td>
-                      <td>{row.tipo_persona}</td>
+                      <td>{row.empresa_pertenece}</td>
                     </tr>
                   ))}
                 </tbody>
