@@ -19,6 +19,7 @@ interface UseHistorialAdminResult {
   setRedemptionStoreId: (value: number | null) => void
   goToPage: (page: number) => void
   buscar: () => void
+  appliedFilters: Omit<HistorialAdminFiltros, 'page' | 'pageSize'>
 }
 
 export function useHistorialAdmin(): UseHistorialAdminResult {
@@ -99,5 +100,6 @@ export function useHistorialAdmin(): UseHistorialAdminResult {
     setRedemptionStoreId,
     goToPage,
     buscar,
+    appliedFilters,
   }
 }

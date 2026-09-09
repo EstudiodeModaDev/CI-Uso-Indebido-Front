@@ -2,6 +2,7 @@ import type { ChangeEvent, FormEvent } from 'react'
 import './TableroControlInterno.css'
 import AuthLayout from '../common/AuthLayout'
 import { useHistorialAdmin } from '../../Funcionalidades/code/hooks/useHistorialAdmin'
+import { useExportarHistorialAdmin } from '../../Funcionalidades/code/hooks/useExportarHistorialAdmin'
 import { useTiendas } from '../../Funcionalidades/stores/hooks/useTiendas'
 import type { HistorialCodigoAdmin } from '../../models/code'
 import { formatFechaHistorial, formatValorCompra } from '../../Funcionalidades/code/utils/otp.utils'
@@ -34,9 +35,11 @@ function TableroControlInterno() {
     setRedemptionStoreId,
     goToPage,
     buscar,
+    appliedFilters,
   } = useHistorialAdmin()
 
   const { tiendas } = useTiendas()
+  const { isExporting, exportar: exportarExcel } = useExportarHistorialAdmin()
 
   const totalPages = Math.max(Math.ceil(total / pageSize), 1)
 
@@ -166,6 +169,14 @@ function TableroControlInterno() {
               {total === 0 ? 'Sin resultados' : `Pagina ${page} de ${totalPages} — ${total} codigo(s)`}
             </span>
             <div className="tablero-control__pagination-actions">
+              <button
+                type="button"
+                className="tablero-control__submit"
+                onClick={() => void exportarExcel(appliedFilters)}
+                disabled={isExporting || isLoading}
+              >
+                {isExporting ? 'Exportando...' : 'Exportar a Excel'}
+              </button>
               <button
                 type="button"
                 onClick={() => goToPage(page - 1)}
