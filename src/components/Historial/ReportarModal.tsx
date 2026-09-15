@@ -527,7 +527,7 @@ function ReportarModal({ codigo, persona, isSubmitting, onClose, onSubmit }: Rep
         toRecipients: [
           {
             emailAddress: {
-              address: "dpalacios@estudiodemoda.com.co"
+              address: "lmgonzalez@estudiodemoda.com.co"
             }
           }
         ],
