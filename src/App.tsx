@@ -10,7 +10,6 @@ import { AuthProvider } from './contexts/AuthContext'
 import type { ReactNode } from 'react'
 import { useAuth } from './Funcionalidades/authentication/hooks/useAuthentication'
 import { ROLE_CONTROL_INTERNO, ROLE_TIENDAS } from './models/auth'
-import React from 'react'
 
 // Carga diferida: esta página trae la librería de parseo de Excel (xlsx), que solo
 // necesitan los administradores que suben el archivo, no el resto de usuarios.
