@@ -6,6 +6,8 @@ import { useAuth } from '../../Funcionalidades/authentication/hooks/useAuthentic
 
 interface CambiarPasswordModalProps {
   onClose: () => void
+  // Modo obligatorio (primer ingreso): el modal no se puede cerrar sin cambiar la contrasena
+  forced?: boolean
 }
 
 interface PasswordErrors {
@@ -59,8 +61,8 @@ function IconEye({ off }: { off: boolean }) {
   )
 }
 
-function CambiarPasswordModal({ onClose }: CambiarPasswordModalProps) {
-  const { changePassword } = useAuth()
+function CambiarPasswordModal({ onClose, forced = false }: CambiarPasswordModalProps) {
+  const { changePassword, signOut, person } = useAuth()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -73,11 +75,14 @@ function CambiarPasswordModal({ onClose }: CambiarPasswordModalProps) {
     const nextErrors: PasswordErrors = {}
 
     if (!password || password.length < MIN_PASSWORD_LENGTH) {
-      nextErrors.password = `La contrasena debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`
+      nextErrors.password = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`
+    } else if (person?.numero_documento && password === person.numero_documento.trim()) {
+      // La contrasena inicial es el numero de documento; no se permite reutilizarla
+      nextErrors.password = 'La contraseña no puede ser tu numero de documento'
     }
 
     if (password !== confirmPassword) {
-      nextErrors.confirmPassword = 'Las contrasenas no coinciden'
+      nextErrors.confirmPassword = 'Las contraseñas no coinciden'
     }
 
     setErrors(nextErrors)
@@ -94,31 +99,53 @@ function CambiarPasswordModal({ onClose }: CambiarPasswordModalProps) {
       return
     }
 
-    toast.success('Contrasena actualizada correctamente.')
+    toast.success('Contraseña actualizada correctamente.')
     onClose()
   }
 
+  const handleSignOut = async () => {
+    const { error } = await signOut()
+    if (error) {
+      toast.error(error.message)
+    }
+  }
+
   return (
-    <div className="cambiar-password-modal__overlay" role="presentation" onClick={onClose}>
+    <div
+      className="cambiar-password-modal__overlay"
+      role="presentation"
+      onClick={forced ? undefined : onClose}
+    >
       <div
         className="cambiar-password-modal__panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby="cambiar-password-modal-title"
+        aria-describedby={forced ? 'cambiar-password-modal-description' : undefined}
         onClick={(event) => event.stopPropagation()}
       >
         <header className="cambiar-password-modal__header">
-          <h2 id="cambiar-password-modal-title">Cambiar contrasena</h2>
-          <button
-            type="button"
-            className="cambiar-password-modal__close"
-            onClick={onClose}
-            aria-label="Cerrar"
-            disabled={isSubmitting}
-          >
-            ×
-          </button>
+          <h2 id="cambiar-password-modal-title">
+            {forced ? 'Actualiza tu contrasena' : 'Cambiar contrasena'}
+          </h2>
+          {!forced && (
+            <button
+              type="button"
+              className="cambiar-password-modal__close"
+              onClick={onClose}
+              aria-label="Cerrar"
+              disabled={isSubmitting}
+            >
+              ×
+            </button>
+          )}
         </header>
+
+        {forced && (
+          <p className="cambiar-password-modal__description" id="cambiar-password-modal-description">
+            Por seguridad, debes cambiar tu contrasena antes de continuar.
+          </p>
+        )}
 
         <form className="cambiar-password-modal__form" onSubmit={handleSubmit} noValidate>
           <div className="cambiar-password-modal__field">
@@ -191,10 +218,10 @@ function CambiarPasswordModal({ onClose }: CambiarPasswordModalProps) {
             <button
               type="button"
               className="cambiar-password-modal__cancel"
-              onClick={onClose}
+              onClick={forced ? handleSignOut : onClose}
               disabled={isSubmitting}
             >
-              Cancelar
+              {forced ? 'Cerrar sesion' : 'Cancelar'}
             </button>
             <button type="submit" className="cambiar-password-modal__submit" disabled={isSubmitting}>
               {isSubmitting ? 'Guardando...' : 'Guardar contrasena'}

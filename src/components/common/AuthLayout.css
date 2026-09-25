@@ -66,18 +66,20 @@
   gap: var(--space-3);
 }
 
-.auth-shell__brand-mark {
-  display: inline-flex;
+.auth-shell__logo-large {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius-sm);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-sm);
-  letter-spacing: 0.5px;
+}
+
+.auth-shell__logo-large img {
+  width: 65%;
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
 }
 
 .auth-shell__brand-text {

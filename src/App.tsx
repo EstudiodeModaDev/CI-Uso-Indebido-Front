@@ -5,6 +5,7 @@ import Login from './components/Login/Login'
 import Otp from './components/Otp/Otp'
 import Historial from './components/Historial/Historial'
 import MiCuenta from './components/Cuenta/MiCuenta'
+import CambiarPasswordModal from './components/Cuenta/CambiarPasswordModal'
 import './App.css'
 import { AuthProvider } from './contexts/AuthContext'
 import type { ReactNode } from 'react'
@@ -23,9 +24,7 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ children, requireRole, blockRole }: ProtectedRouteProps) {
-  const { session, loading, hasRole } = useAuth()
-
-  //React.useEffect(() => {console.log(session?.access_token)}, [session, loading, hasRole])
+  const { session, loading, hasRole, profile } = useAuth()
 
   if (loading) return null // o un spinner
 
@@ -37,6 +36,13 @@ function ProtectedRoute({ children, requireRole, blockRole }: ProtectedRouteProp
 
   if (blockRole && hasRole(blockRole)) {
     return <Navigate to="/login" replace />
+  }
+
+  // Primer ingreso (o contrasena reseteada): se bloquea la ruta hasta que el usuario
+  // cambie su contrasena. Al guardarla, changePassword recarga el perfil con la bandera
+  // en false y la ruta se vuelve a renderizar con su contenido normal.
+  if (profile?.requiere_cambio_password) {
+    return <CambiarPasswordModal forced onClose={() => {}} />
   }
 
   return <>{children}</>

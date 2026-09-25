@@ -267,13 +267,15 @@ const loadProfile = useCallback(
         return { error: passwordError };
       }
 
+
       const { error: profileUpdateError } = await supabase
         .from("USUARIOS")
         .update({
           requiere_cambio_password: false,
           fecha_actualizacion: new Date().toISOString(),
         })
-        .eq("auth_user_id", session.user.id);
+        .eq("auth_user_id", session.user.id)
+        .select("*")
 
       if (profileUpdateError) {
         return {

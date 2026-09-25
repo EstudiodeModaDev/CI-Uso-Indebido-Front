@@ -44,7 +44,7 @@ export const CONFIG = {
         nombres: "nombres",
         apellidos: (item) => [item.fields["primer_apellido"], item.fields["segundo_apellido"]].filter((v) => typeof v === "string" && v.trim()).join(" "),
         correo: "email",
-        telefono: "telefono",
+        telefono: "celular",
         estado: (item) => {
           const value = item.fields["estado_contrato"];
           return typeof value === "string" ? value.toUpperCase() : null;
