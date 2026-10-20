@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import './Historial.css'
 import type { HistorialCodigo } from '../../models/code'
@@ -21,14 +21,20 @@ function Historial() {
   const { isLoadingHistorial, obtenerHistorial } = useHistorialOtp()
   const { isReporting, crearReporte, notifyReport } = useCrearReporte()
 
+  const perfilIncompleto = Boolean(person) && (!person?.numero_documento || !person?.correo)
+  const avisoPerfilMostrado = useRef(false)
+
   useEffect(() => {
     if (loading || hasLoadedHistorial || !person) {
       return
     }
 
-    if (!person.numero_documento || !person.correo) {
-      toast.error('Tu perfil no tiene cédula o correo configurado para consultar el historial.')
-      setHasLoadedHistorial(true)
+    if (perfilIncompleto) {
+      // El toast es un efecto externo; el ref evita repetirlo si cambia `person`
+      if (!avisoPerfilMostrado.current) {
+        avisoPerfilMostrado.current = true
+        toast.error('Tu perfil no tiene cédula o correo configurado para consultar el historial.')
+      }
       return
     }
 
@@ -56,7 +62,7 @@ function Historial() {
     return () => {
       active = false
     }
-  }, [hasLoadedHistorial, loading, obtenerHistorial, person])
+  }, [hasLoadedHistorial, loading, obtenerHistorial, perfilIncompleto, person])
 
   
   React.useEffect(() => {
@@ -68,7 +74,7 @@ function Historial() {
     if (!codigoAReportar || !person || !session?.user) return
 
     const reporte = await crearReporte({
-      codigo_otp_id: Number(codigoAReportar.id) ?? null,
+      codigo_otp_id: Number(codigoAReportar.id),
       descripcion: razon,
       fecha_reporte: new Date(),
       persona_id: person.id,

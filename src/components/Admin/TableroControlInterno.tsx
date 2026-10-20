@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
 import './TableroControlInterno.css'
 import AuthLayout from '../common/AuthLayout'
+import DetalleCodigoModal from './DetalleCodigoModal'
 import { useHistorialAdmin } from '../../Funcionalidades/code/hooks/useHistorialAdmin'
 import { useExportarHistorialAdmin } from '../../Funcionalidades/code/hooks/useExportarHistorialAdmin'
 import { useTiendas } from '../../Funcionalidades/stores/hooks/useTiendas'
@@ -39,6 +41,7 @@ function TableroControlInterno() {
   } = useHistorialAdmin()
 
   const { tiendas } = useTiendas()
+  const [codigoDetalle, setCodigoDetalle] = useState<HistorialCodigoAdmin | null>(null)
   const { isExporting, exportar: exportarExcel } = useExportarHistorialAdmin()
 
   const totalPages = Math.max(Math.ceil(total / pageSize), 1)
@@ -133,12 +136,13 @@ function TableroControlInterno() {
                   <th>Redimido en</th>
                   <th>Generado el</th>
                   <th>Redimido el</th>
+                  <th aria-label="Acciones" />
                 </tr>
               </thead>
               <tbody>
                 {!isLoading && items.length === 0 && (
                   <tr>
-                    <td colSpan={9} className="tablero-control__empty">
+                    <td colSpan={10} className="tablero-control__empty">
                       No se encontraron codigos con los filtros seleccionados.
                     </td>
                   </tr>
@@ -158,6 +162,15 @@ function TableroControlInterno() {
                     <td>{item.redeemIn ?? '—'}</td>
                     <td>{formatFechaHistorial(item.generatedAt)}</td>
                     <td>{formatFechaHistorial(item.redeemedAt)}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="tablero-control__detail"
+                        onClick={() => setCodigoDetalle(item)}
+                      >
+                        Ver detalle
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -199,6 +212,10 @@ function TableroControlInterno() {
           </p>
         </div>
       </div>
+
+      {codigoDetalle && (
+        <DetalleCodigoModal codigo={codigoDetalle} onClose={() => setCodigoDetalle(null)} />
+      )}
     </AuthLayout>
   )
 }

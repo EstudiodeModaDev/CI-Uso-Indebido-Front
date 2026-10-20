@@ -5,6 +5,7 @@ import './Login.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../Funcionalidades/authentication/hooks/useAuthentication'
 import AuthLayout from '../common/AuthLayout'
+import OlvidePasswordModal from './OlvidePasswordModal'
 
 type LoginErrors = {
   email?: string
@@ -99,6 +100,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState<LoginErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isForgotOpen, setIsForgotOpen] = useState(false)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -209,9 +211,14 @@ function Login() {
           </div>
 
           <div className="login__row">
-            <a className="login__link" href="#">
+            <button
+              type="button"
+              className="login__link"
+              onClick={() => setIsForgotOpen(true)}
+              disabled={isSubmitting}
+            >
               Olvidaste tu contrasena?
-            </a>
+            </button>
           </div>
 
           <button className="login__submit" type="submit" disabled={isSubmitting}>
@@ -225,6 +232,10 @@ function Login() {
           reservados.
         </p>
       </div>
+
+      {isForgotOpen && (
+        <OlvidePasswordModal initialEmail={email} onClose={() => setIsForgotOpen(false)} />
+      )}
     </AuthLayout>
   )
 }

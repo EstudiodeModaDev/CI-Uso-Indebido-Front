@@ -26,6 +26,10 @@ interface ProtectedRouteProps {
 function ProtectedRoute({ children, requireRole, blockRole }: ProtectedRouteProps) {
   const { session, loading, hasRole, profile } = useAuth()
 
+  //  React.useEffect(() => {
+  //    console.log(session?.access_token)
+  //  }, [session])
+
   if (loading) return null // o un spinner
 
   if (!session) return <Navigate to="/login" replace />

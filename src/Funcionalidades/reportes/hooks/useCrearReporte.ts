@@ -50,7 +50,7 @@ export function useCrearReporte(): UseCrearReporteResult {
         }  
 
         return {};
-      } catch (e) {
+      } catch {
         return { error: "Error enviando el correo" };
       }
     },

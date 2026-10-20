@@ -186,3 +186,11 @@
     padding: var(--space-6);
   }
 }
+
+button.login__link {
+  font: inherit;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}

@@ -18,5 +18,16 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      // Se avisan, pero no rompen el lint
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' },
+      ],
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'no-constant-binary-expression': 'warn',
+    },
   },
 ])

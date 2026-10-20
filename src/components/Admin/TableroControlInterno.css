@@ -4,12 +4,13 @@
   align-items: center;
   gap: var(--space-6);
   width: 100%;
+  min-width: 0;
 }
 
 .tablero-control__card {
   position: relative;
   width: 100%;
-  max-width: 1180px;
+  min-width: 0;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -211,4 +212,21 @@
   .tablero-control__card {
     padding: var(--space-6);
   }
+}
+
+.tablero-control__detail {
+  font: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.tablero-control__detail:hover {
+  background: var(--color-surface-alt);
 }

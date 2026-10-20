@@ -58,6 +58,19 @@ export interface HistorialCodigoAdmin {
   generateIn: string
   redeemIn: string | null
   invoiceNumber: number | null
+  // Detalle de la venta. Opcionales: la API aun no los envia en /otp/history/admin
+  sellerName?: string | null
+  cashierName?: string | null
+  invoiceTotal?: number | null
+  discountValue?: number | null
+  soldItems?: ItemVendido[] | null
+}
+
+export interface ItemVendido {
+  description: string
+  quantity: number
+  unitPrice: number
+  total: number
 }
 
 export interface HistorialAdminFiltros {

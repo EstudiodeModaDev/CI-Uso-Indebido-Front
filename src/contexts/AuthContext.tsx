@@ -1,37 +1,10 @@
 // src/contexts/AuthContext.tsx
 
-import {createContext, useCallback, useEffect, useMemo, useState, type ReactNode,} from "react";
-import type {AuthError, Session, User, } from "@supabase/supabase-js";
+import {useCallback, useEffect, useMemo, useState, type ReactNode,} from "react";
+import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../services/supabase.service";
 import type { PersonData, UserProfile, UserRole } from "../models/auth";
-
-interface SignInCredentials {
-  email: string;
-  password: string;
-}
-
-interface AuthContextValue {
-  session: Session | null;
-  user: User | null;
-  profile: UserProfile | null;
-  roles: UserRole[];
-  loading: boolean;
-  profileError: string | null;
-  person: PersonData | null
-
-  signIn: (credentials: SignInCredentials,) => Promise<{ error: AuthError | null }>;
-
-  signOut: () => Promise<{ error: AuthError | null }>;
-
-  changePassword: (newPassword: string,) => Promise<{ error: Error | AuthError | null }>;
-
-  refreshProfile: () => Promise<void>;
-
-  hasRole: (role: string) => boolean;
-}
-
-export const AuthContext =
-  createContext<AuthContextValue | undefined>(undefined);
+import { AuthContext, type AuthContextValue, type SignInCredentials } from "./auth-context";
 
 interface AuthProviderProps {
   children: ReactNode;

@@ -30,3 +30,12 @@ export const ROLE_TIENDAS = 'TIENDA'
 export const ROLE_CONTROL_INTERNO = 'CONTROL_INTERNO'
 export const ROLE_EMPLEADO = 'EMPLEADO'
 export const ROLE_SOCIO = 'SOCIO'
+export interface GeneratePasswordOtpResponse {
+  success: boolean
+  message: string
+}
+
+export interface ValidatePasswordOtpResponse {
+  valid: true
+  tokenHash: string
+}
