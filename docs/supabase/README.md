@@ -2,6 +2,8 @@
 
 La carpeta [supabase/](../../supabase) contiene la configuración de la CLI de Supabase, las migraciones SQL y las Edge Functions (Deno) del proyecto.
 
+El modelo de datos completo de la base (tablas, relaciones, estados y quién lee o escribe cada tabla) está en [modelo-de-datos.md](modelo-de-datos.md).
+
 ## Edge Functions
 
 | Función | Propósito | Disparador | Autenticación | `verify_jwt` | Doc |
@@ -71,13 +73,13 @@ Para probar en local: `supabase functions serve <nombre> --env-file supabase/fun
 | [20260723000000_migration_users_tables.sql](../../supabase/migrations/20260723000000_migration_users_tables.sql) | `PERSONAS`, `USUARIOS`, `migration_logs`, `migration_cursor` (con RLS y sin políticas) |
 | [20260724000000_create_reportes_table.sql](../../supabase/migrations/20260724000000_create_reportes_table.sql) | `REPORTES` con políticas de `insert`/`select` para `authenticated` |
 
-> Estas migraciones están **desactualizadas** respecto a la base real. El esquema vigente de `PERSONAS` y `USUARIOS` (PK autogeneradas, `id_persona`, `auth_user_id`, `requiere_cambio_password`, etc.) se modificó directamente en la base, y el front registra los reportes en `REPORTES_USO_INDEBIDO`, no en `REPORTES`. Las tablas `ROLES`, `USUARIOS_ROLES` y `LOG` no tienen migración en este repositorio. No ejecutes `supabase db push` contra producción con estos archivos sin revisarlos. El esquema que usa el código está en [09-modelos-de-datos.md](../09-modelos-de-datos.md).
+> Estas migraciones están **desactualizadas** respecto a la base real. El esquema vigente de `PERSONAS` y `USUARIOS` (PK autogeneradas, `id_persona`, `auth_user_id`, `requiere_cambio_password`, etc.) se modificó directamente en la base, y el front registra los reportes en `REPORTES_USO_INDEBIDO`, no en `REPORTES`. Las tablas `ROLES`, `USUARIOS_ROLES` y `LOG` no tienen migración en este repositorio. No ejecutes `supabase db push` contra producción con estos archivos sin revisarlos. El esquema que usa el código está en [modelo-de-datos.md](modelo-de-datos.md).
 
 ## Tareas programadas recomendadas
 
 | Job | Frecuencia sugerida | Función |
 | --- | --- | --- |
-| Sincronización de empleados | Cada hora (`0 * * * *`) | `sincronizacion-you` |
+| Sincronización de empleados | Cada dos dias| `sincronizacion-you` |
 | Mantener la base activa | Cada 15 min | `keep-db-awake` |
 | Mantener el backend activo | Cada 5 min | `ping-backend-health` |
 

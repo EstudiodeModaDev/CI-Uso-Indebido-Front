@@ -28,6 +28,8 @@ Según el contexto, el mismo código se representa con distintos conjuntos de es
 
 Las tablas usan nombres en MAYÚSCULAS, por lo que en SQL deben ir siempre entre comillas dobles (`public."PERSONAS"`).
 
+Esta sección cubre las tablas que toca el front. El modelo completo de la base, incluidas las tablas de la API (`CODIGOS_OTP`, `TIENDAS`, `ENVIOS_CORREO`…), con diagrama entidad-relación, está en [supabase/modelo-de-datos.md](supabase/modelo-de-datos.md).
+
 > **Importante:** las migraciones de [supabase/migrations](../supabase/migrations) **no** reflejan el esquema real (ver [supabase/README.md](supabase/README.md#migraciones)). Las columnas de esta sección se deducen del código que las usa.
 
 ### `PERSONAS`
@@ -102,4 +104,4 @@ Una sola fila (`id = 1`) con `next_offset` y `updated_at`. Guarda por dónde va 
 
 ### Tablas de la API (no las toca el front)
 
-Los códigos OTP, las tiendas y las facturas se gestionan a través de la API NestJS. Su modelo está documentado en el backend (`CI-Back-Compras-y-descuentos/documents/arquitectura-api-descuentos.md`).
+Los códigos OTP, las tiendas y las facturas se gestionan a través de la API NestJS. Sus tablas se describen en [supabase/modelo-de-datos.md](supabase/modelo-de-datos.md#operación-de-descuentos).
