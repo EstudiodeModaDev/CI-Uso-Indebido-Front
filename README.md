@@ -1,77 +1,60 @@
-# React + TypeScript + Vite
+# Compras y descuentos · Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web de Estudio de Moda para gestionar los descuentos de empleados y socios mediante códigos OTP: las tiendas generan y redimen los códigos, los beneficiarios consultan su historial y reportan usos indebidos, y control interno administra usuarios y audita todas las transacciones.
 
-Currently, two official plugins are available:
+**Stack:** React 19 · TypeScript · Vite · Supabase (Auth, Postgres, Edge Functions) · API NestJS · Azure Static Web Apps
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Inicio rápido
 
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+# crear .env con VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY y VITE_API_URL
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Script | Descripción |
+| --- | --- |
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Chequeo de tipos y build de producción en `dist/` |
+| `npm run preview` | Sirve el build localmente |
+| `npm run lint` | ESLint |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Cada `push` a `main` se despliega automáticamente en Azure Static Web Apps. Ver [Arquitectura → Despliegue](docs/01-arquitectura.md#despliegue).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Documentación
 
-```
+Toda la documentación está en [docs/](docs), un archivo por módulo.
+
+### Front
+
+| # | Documento | Contenido |
+| --- | --- | --- |
+| 01 | [Arquitectura general](docs/01-arquitectura.md) | Stack, estructura de carpetas, capas, rutas, variables de entorno y despliegue |
+| 02 | [Autenticación, sesión y roles](docs/02-autenticacion-y-roles.md) | `AuthContext`, login, protección de rutas, roles, cambio obligatorio y recuperación de contraseña |
+| 03 | [Generación y redención de OTP](docs/03-generacion-y-redencion-otp.md) | Flujo de la tienda: buscar persona, generar, validar y redimir el código (`/otp`) |
+| 04 | [Historial y reportes](docs/04-historial-y-reportes.md) | Historial del beneficiario y reporte de uso indebido con notificación por correo (`/historial-codigos`) |
+| 05 | [Mi cuenta](docs/05-mi-cuenta.md) | Datos del usuario y cambio voluntario de contraseña (`/mi-cuenta`) |
+| 06 | [Administración: carga de usuarios](docs/06-admin-carga-usuarios.md) | Carga masiva desde Excel y exportación por rol (`/admin/usuarios`) |
+| 07 | [Administración: tablero de códigos](docs/07-admin-tablero-codigos.md) | Auditoría de códigos, detalle de factura y exportación (`/admin/codigos`) |
+| 08 | [Servicios e integraciones](docs/08-servicios-y-api.md) | Cliente de la API, uso de Supabase, catálogo de endpoints y API de correos |
+| 09 | [Modelos de datos](docs/09-modelos-de-datos.md) | Tipos TypeScript y tablas de Supabase |
+| 10 | [UI compartida y estilos](docs/10-ui-y-estilos.md) | `AuthLayout`, tokens CSS, toasts, modales y convenciones de formularios |
+
+### Supabase y Edge Functions
+
+| Documento | Contenido |
+| --- | --- |
+| [Supabase: proyecto y funciones](docs/supabase/README.md) | Resumen de funciones, claves, despliegue, `config.toml`, migraciones y crons |
+| [bulk-create-users](docs/supabase/bulk-create-users.md) | Alta/actualización masiva de usuarios desde el Excel (la invoca el front) |
+| [sincronizacion-you](docs/supabase/sincronizacion-you.md) | Sincronización de empleados desde SharePoint "YOU" (cron) |
+| [migrate-sharepoint-users](docs/supabase/migrate-sharepoint-users.md) | Migración inicial desde SharePoint (versión anterior) |
+| [keep-db-awake](docs/supabase/keep-db-awake.md) | Mantiene activa la base de datos (cron) |
+| [ping-backend-health](docs/supabase/ping-backend-health.md) | Mantiene activo el backend (cron) |
+
+### Pendientes
+
+[Observaciones técnicas](docs/observaciones-tecnicas.md): problemas de seguridad, datos y front detectados al documentar el código.
+
+## Proyectos relacionados
+
+- **API NestJS:** `CI-Back-Compras-y-descuentos` (OTP, tiendas, facturas, correos de OTP).
