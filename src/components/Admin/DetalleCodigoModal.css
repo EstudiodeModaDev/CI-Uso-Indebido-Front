@@ -212,3 +212,37 @@
 .detalle-codigo-modal__cancel:hover {
   background: var(--color-surface-alt);
 }
+
+@media (max-width: 480px) {
+  .detalle-codigo-modal__overlay {
+    padding: var(--space-2);
+  }
+
+  .detalle-codigo-modal__panel {
+    max-height: calc(100dvh - var(--space-4));
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .detalle-codigo-modal__header h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .detalle-codigo-modal__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .detalle-codigo-modal__info-row {
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+  }
+
+  .detalle-codigo-modal__info-row dd {
+    overflow-wrap: anywhere;
+  }
+
+  .detalle-codigo-modal__table th,
+  .detalle-codigo-modal__table td {
+    padding: var(--space-2);
+  }
+}

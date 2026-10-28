@@ -152,8 +152,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .mi-cuenta__actions {
@@ -189,10 +188,18 @@
 
 @media (max-width: 480px) {
   .mi-cuenta__card {
-    padding: var(--space-6);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .mi-cuenta__header h1 {
+    font-size: var(--font-size-xl);
   }
 
   .mi-cuenta__grid {
     grid-template-columns: 1fr;
+  }
+
+  .mi-cuenta__change-password {
+    width: 100%;
   }
 }

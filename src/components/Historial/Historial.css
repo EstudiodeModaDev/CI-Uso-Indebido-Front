@@ -144,10 +144,26 @@
 
 @media (max-width: 480px) {
   .historial__card {
-    padding: var(--space-6);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .historial__header h1 {
+    font-size: var(--font-size-xl);
   }
 
   .historial__item-main {
     flex-wrap: wrap;
+  }
+
+  .historial__code {
+    overflow-wrap: anywhere;
+  }
+
+  .historial__list {
+    max-height: 60svh;
+  }
+
+  .historial__report-btn {
+    align-self: stretch;
   }
 }

@@ -4,6 +4,7 @@ import type { HistorialCodigoAdmin } from '../../models/code'
 import type { invoice } from '../../models/invoice'
 import { api } from '../../services/api.service'
 import { secureTrim } from '../../Funcionalidades/common/secureTrim'
+import React from 'react'
 
 interface DetalleCodigoModalProps {
   codigo: HistorialCodigoAdmin
@@ -11,7 +12,8 @@ interface DetalleCodigoModalProps {
 }
 
 interface InvoiceResponse {
-  data: invoice[]
+  data: invoice
+  ok: boolean
 }
 
 const NO_DISPONIBLE = 'No disponible'
@@ -93,7 +95,7 @@ function DetalleCodigoModal({ codigo, onClose }: DetalleCodigoModalProps) {
           `/invoice?cedula=${encodeURIComponent(codigo.document)}&factura=${codigo.invoiceNumber}`
         )
         if (cancelled) return
-        const encontrada = response.data?.[0] ?? null
+        const encontrada = response.data ?? null
         setInvoice(encontrada)
         if (!encontrada) {
           setAviso(`No se encontró la factura #${codigo.invoiceNumber} para la cédula ${codigo.document}.`)
@@ -116,6 +118,10 @@ function DetalleCodigoModal({ codigo, onClose }: DetalleCodigoModalProps) {
       cancelled = true
     }
   }, [codigo.document, codigo.invoiceNumber])
+
+  React.useEffect(() => {
+    console.log(invoice)
+  }, [invoice])
 
   const valor = (texto: string) => (cargando ? CARGANDO : texto)
 
@@ -154,11 +160,11 @@ function DetalleCodigoModal({ codigo, onClose }: DetalleCodigoModalProps) {
         <dl className="detalle-codigo-modal__info">
           <div className="detalle-codigo-modal__info-row">
             <dt>Comprador</dt>
-            <dd>{valor(textoOVacio(invoice?.NombreCompradorPOS))}</dd>
+            <dd>{valor(textoOVacio(invoice?.Nombre_Comprador))}</dd>
           </div>
           <div className="detalle-codigo-modal__info-row">
             <dt>Vendedor</dt>
-            <dd>{valor(textoOVacio(invoice?.Vendedor))}</dd>
+            <dd>{valor(textoOVacio(invoice?.Nombre_Vendedor))}</dd>
           </div>
           <div className="detalle-codigo-modal__info-row">
             <dt>Cajero</dt>
@@ -171,10 +177,10 @@ function DetalleCodigoModal({ codigo, onClose }: DetalleCodigoModalProps) {
           </div>
           <div className="detalle-codigo-modal__info-row">
             <dt>Total factura</dt>
-            <dd>{valor(formatMoneda(numeroOVacio(invoice?.ValorNeto)))}</dd>
+            <dd>{valor(formatMoneda(numeroOVacio(invoice?.ValorBruto)))}</dd>
           </div>
           <div className="detalle-codigo-modal__info-row">
-            <dt>Descuento</dt>
+            <dt>Valor con descuento</dt>
             <dd>{valor(formatMoneda(numeroOVacio(invoice?.ValorDescuento)))}</dd>
           </div>
         </dl>

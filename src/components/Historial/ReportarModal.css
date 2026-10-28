@@ -182,3 +182,32 @@
   cursor: not-allowed;
   transform: none;
 }
+
+@media (max-width: 480px) {
+  .reportar-modal__overlay {
+    padding: var(--space-2);
+  }
+
+  .reportar-modal__panel {
+    max-height: calc(100dvh - var(--space-4));
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .reportar-modal__header h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .reportar-modal__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .reportar-modal__info-row {
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+  }
+
+  .reportar-modal__info-row strong {
+    overflow-wrap: anywhere;
+  }
+}
